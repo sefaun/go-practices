@@ -1,31 +1,21 @@
 package main
 
-import "fmt"
-
-//"pactice/routines"
-/*return_data "practice/returnData"
-struct_practice "practice/struct"*/
-
-/*func YeniStructDeniyoz() *struct_practice.Sefa {
-	var sefaa struct_practice.Sefa
-
-	result := sefaa.Fetch(10)
-
-	return result
-}*/
+import (
+	"fmt"
+	httprequest "practice/http-request"
+	"practice/types"
+)
 
 func main() {
 
-	/*cevap := return_data.SeeResponse(10)
-	print(cevap)
+	result := make(chan types.LoginResponse)
 
-	sonuc := YeniStructDeniyoz()
+	go httprequest.Login(result)
 
-	print(sonuc)*/
-	//routines.Routines()
+	for n := range result {
+		fmt.Println(n.Success)
+		fmt.Println(n.Data)
+		fmt.Println(n.Message)
+	}
 
-	goroutine1 := make(chan string, 5)
-	goroutine1 <- "Australia"
-	data := <-goroutine1
-	fmt.Printf("%s", data)
 }
